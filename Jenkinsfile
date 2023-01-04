@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('拉取Git仓库代码') {
             steps {
-		checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'd1c2b682-5736-4dab-a41f-d75892d26e05', url: 'https://github.com/diony-chen/test.git']]])
+		    checkout([$class: 'GitSCM', branches: [[name: '${tag}']], extensions: [], userRemoteConfigs: [[credentialsId: 'd1c2b682-5736-4dab-a41f-d75892d26e05', url: 'https://github.com/diony-chen/test.git']]])
 	    }
         }
 	
