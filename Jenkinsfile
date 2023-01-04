@@ -29,7 +29,11 @@ pipeline {
         }
 	stage('通过Publish Over SHH通知目标服务器') {
             steps {
-                echo '通过Publish Over SHH通知目标服务器 - SUCCESS'
+		sshPublisher(publishers: [sshPublisherDesc(configName: 'test', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''cd /home/docker/test/docker/
+		mv ../target/*jar ./
+		docker-compose down
+		docker-compose up -d --build
+		docker image prune -f''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: 'target/*.jar docker/*')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
             }
         }
     }
