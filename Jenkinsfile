@@ -20,13 +20,7 @@ pipeline {
 		sh '/home/docker/jenkins_docker/data/maven/bin/mvn clean package -DskipTests'
             }
         }
-	    
-	stage('通过Docker制作自定义镜像') {
-            steps {
-		sh '''mv ./target/*.jar ./docker/
-		docker build -t ${JOB_NAME}:${tag} ./docker/'''
-            }
-        }
+	
 	stage('通过Publish Over SHH通知目标服务器') {
             steps {
 		sshPublisher(publishers: [sshPublisherDesc(configName: 'test', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''cd /home/docker/test/docker/
