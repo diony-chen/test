@@ -23,7 +23,8 @@ pipeline {
 	    
 	stage('通过Docker制作自定义镜像') {
             steps {
-                echo '通过Docker制作自定义镜像 - SUCCESS'
+		sh '''mv ./target/*.jar ./docker/
+		docker build -t ${JOB_NAME}:${tag} ./docker/'''
             }
         }
 	stage('通过Publish Over SHH通知目标服务器') {
